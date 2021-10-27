@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments/header :: header" />
+
+    <body>
+        <header class="header" th:include="fragments/menu :: menu" />
+
+        <div class="container">
+            <div class="row">
+                <div id="search_form_container" class="col-md-6 col-md-offset-3 panel panel-default">
+
+                    <h1 class="form-title" th:text="#{search.form.title}">Search</h1>
+                    <form id="search_form" class="col-md-10" th:action="search" th:object="${search}" method="post">
+
+                        <div class="form-group">
+                            <label for="keywords" class="control-label" th:text="#{search.form.keywords}">Keywords</label> 
+                            <input id="keywords" class="form-control" th:field="*{keywords}"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="city" class="control-label" th:text="#{search.form.city}">City</label> 
+                            <input id="city" class="form-control" th:field="*{city}"/>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="date_start" class="control-label" th:text="#{search.form.date_start}">Start Date</label> 
+                            <input id="date_start" type="date" class="form-control" th:field="*{date_start}"/>
+                        </div>
+                        
+                        <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('date_end')}? 'has-error':''">
+                            <label for="date_end" class="control-label" th:text="#{search.form.date_end}">End Date</label> 
+                            <input id="date_end" type="date" class="form-control" th:field="*{date_end}"/>
+                            
+                            <p class="error-message" th:each="error : ${#fields.errors('date_end')}" 
+                            	th:text="${error}">Validation error</p>
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+                            <label for="price_min" class="control-label" th:text="#{search.form.price_min}">Min Price</label> 
+                            <span>(&euro;)</span>
+                            <input id="price_min" type="number" class="form-control" th:field="*{price_min}" value="0.01" min="0.01" max="99999.99" step=".01"/>
+                        </div>
+                        
+                        <div class="form-group col-md-6" th:classappend="${#fields.hasErrors('price_max')}? 'has-error':''">
+                            <label for="price_max" class="control-label" th:text="#{search.form.price_max}">Max Price</label> 
+                            <span>(&euro;)</span>
+                            <input id="price_max" type="number" class="form-control" th:field="*{price_max}" value="0.01" min="0.01" max="99999.99" step=".01"/>
+                        
+                        	<p class="error-message" th:each="error : ${#fields.errors('price_max')}" 
+                            	th:text="${error}">Validation error</p>
+                        </div>
+                        
+                        <div sec:authorize="isAuthenticated()">
+                        	<div th:if="${timesRated > 0}" >
+		                        <div class="form-group col-md-6">
+		                            <label for="val_min" class="control-label">Min Rate</label>
+		                            <input id="val_min" class="form-control" th:field="*{val_min}" type="number" value="1" min="0" max="5" step="1" />
+		                        </div>
+                        	</div>
+
+                        </div>
+                        
+
+						<p class="error-message" th:if="${#fields.hasGlobalErrors()}"
+                            th:each="error : ${#fields.errors('global')}" th:text="${error}">Validation error</p>
+
+        
+                        <div class="form-group submit_form_group">
+                        	<button type="submit" class="btn btn-success" th:text="#{search.form.submit}">Search</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <h1 class="form-title" th:text="#{ad.search.list.title}">Ads found</h1>
+        
+        <div class="row" th:each="ad : ${ads}">
+
+			<div th:if="${!ad.hideAd}">
+				<div th:replace="fragments/ad_fragment :: ad_fragment(ad=${ad}, my_id=${my_id}, favs=${favs}, following=${following})" />
+			</div>
+		</div>
+			
+        <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+        <script type="text/javascript" th:src="@{/static/js/rating.js}"></script>
+    </body>
+</html>

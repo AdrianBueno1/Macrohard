@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments/header :: header" />
+<body>
+
+	<header class="header" th:include="fragments/menu :: menu" />
+
+	<h1 class="form-title" th:text="#{ad.list.favs}">Ads Favorites</h1>
+
+	<div class="row" th:each="userAd : ${userAds}">
+		<div th:if="${!userAd.hideAd}">
+			<div class="col-md-6 col-md-offset-3 panel panel-default">
+				<h3 class="form-title" th:text="${userAd.adName}">Ad Title</h3>
+				<div class="panel-body">
+					<div th:unless="${!favs.contains(userAd.id)}">
+							<form method="post" th:action="@{'/Fav/removeF'(adId=${userAd.id})}">
+								<button type="submit" class="btn btn-danger">unFav</button>
+							</form>
+						</div>
+					<div class="col-md-4 img_ad_container">
+						<img alt="Ad Pic" th:src="${'/images/' + userAd.urlImg}"
+							class="img-thumbnail img-thumbnail-img-ad">
+					</div>
+					<div class="col-md-8 ad-text-container">
+						<div class="form-group">
+							<label id="label_desc" class="control-label"
+								th:text="#{creation.form.description}">Description</label>
+							<div class="overflow-auto description_text_list">
+								<span th:text="${userAd.description}" />
+							</div>
+						</div>
+					</div>
+					<a id="ad_details_btn" th:href="@{'/ads/' + ${userAd.id}}"
+						role="button" class="btn btn-primary btn-nav "
+						th:text="#{userAd.details.button}">See Details</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col text-center">
+		<a role="button" class="btn btn-primary btn-continue" th:href="@{/}"
+			th:text="#{ad.created.continue}">Continue</a>
+	</div>
+</body>
+
+</html>

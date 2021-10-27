@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments/header :: header" />
+<body>
+
+	<header class="header" th:include="fragments/menu :: menu" />
+	
+	<h1 class="form-title">Ads</h1>
+
+
+	<div id= "user-list" class="row" th:each="ad : ${userAds}">
+		<div th:if="${!ad.hideAd}">
+			<div th:replace="fragments/ad_fragment :: ad_fragment(ad=${ad}, my_id=${my_id}, favs=${favs}, following=${following})" />
+		</div>
+	</div>
+	
+	<div th:include="fragments/scripts :: general" />
+		 
+	<script type="text/javascript" th:src="@{/static/js/rating.js}"></script>
+</body>
+
+</html>

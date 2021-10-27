@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:include="fragments/header :: header" />
+	
+	<body>
+		<header class="header" th:include="fragments/menu :: menu" />
+		
+			<div class="container">
+				<div class="row">
+			   		<div id="login_form_container" class="col-md-6 col-md-offset-3 panel panel-default">
+			    
+						<h1 class="form-title" th:text="#{userPremium.form.title}">Become Premium</h1>
+			
+			    		<form id="login_form" class="col-md-10" th:action="@{/premium}" method="post">		
+							<div th:text="#{userPremium.form.price}" class="price" ></div>
+							
+							<div th:switch="${user.role}">
+								<div th:case="${T(es.udc.fi.dc.fd.model.persistence.User.RoleType).USER}" class="form-group submit_form_group">
+				                	<button type="submit" class="btn btn-warning" th:text="#{userPremium.form.submit}">subscribe</button>
+									
+				                </div>
+				                
+				                <div th:case="${T(es.udc.fi.dc.fd.model.persistence.User.RoleType).PREMIUM}" class="form-group submit_form_group">
+				                	<button type="submit" class="btn btn-danger" th:text="#{userPremium.form.unsub}">unSubscribe</button>
+									
+				                </div>
+			                </div>
+			
+						</form>
+			  		</div>
+			 	</div>
+			</div>
+			
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	</body>
+</html>

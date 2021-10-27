@@ -1,0 +1,58 @@
+<header th:fragment="menu">
+    <nav id="navbar-main" class="navbar navbar-main navbar-default header-size">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#navbar-main-body" aria-expanded="false" aria-controls="navbar-main">
+                    <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span
+                        class="icon-bar"></span> <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" th:href="@{/}" th:text="#{application.title}">Webapp title</a>
+
+            </div>
+
+            <div id="navbar-main-body" class="navbar-body navbar-collapse collapse">
+                <small class="navbar-text">v@project.version@</small>
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    <li sec:authorize="isAuthenticated()">
+                        <a id="chats_btn" th:href="@{/chats}" role="button" class="btn btn-primary btn-nav">Chats</a>
+                    </li>
+                    
+                    <li >
+                        <a id="search_btn" th:href="@{/ads/search}" role="button" class="btn btn-primary btn-nav" th:text="#{label.search}">Search</a>
+                    </li>
+                    
+                    <li sec:authorize="isAuthenticated()">
+                        <a id="userAds_btn" th:href="@{/userList}" role="button" class="btn btn-primary btn-nav " th:text="#{label.userList}">Ads</a>
+                    </li>
+                    
+                    <li sec:authorize="isAuthenticated()">
+                        <a id="ad_btn" th:href="@{/createAd}" role="button" class="btn btn-primary btn-nav" th:text="#{label.ad}">New Ad</a>
+                    </li>
+                   
+                    <li sec:authorize="isAnonymous()">
+                        <a id="login_btn" th:href="@{/login}" role="button" class="btn btn-primary btn-nav" th:text="#{label.login}">Login</a>
+                    </li>
+                    
+					<li sec:authorize="isAnonymous()">
+                        <a id="signup_btn" th:href="@{/signUp}" role="button" class="btn btn-primary btn-nav" th:text="#{label.signUp}">SignUp</a>
+                    </li>
+                    
+                    <li sec:authorize="isAuthenticated()">
+                        <a id="profile_btn" th:href="@{/user/myProfile}" role="button" class="btn btn-primary btn-nav" th:text="#{label.profile}">MyProfile</a>
+                    </li>
+
+					<li sec:authorize="isAuthenticated()">
+                        <a id="logout_btn" th:href="@{/logout}" role="button" class="btn btn-primary btn-nav " th:text="#{label.logout}">Logout</a>
+                    </li>
+                    
+                    <li sec:authorize="isAuthenticated()">
+                        <a id="premium_btn" th:href="@{/premium}" role="button" class="btn btn-warning"; th:text="#{label.premium}"> Premium</a>
+                    </li>
+                     
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

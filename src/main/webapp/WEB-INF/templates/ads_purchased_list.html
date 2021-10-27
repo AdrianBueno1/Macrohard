@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments/header :: header" />
+
+    <body>
+        <header class="header" th:include="fragments/menu :: menu" />
+        
+        <h1 class="form-title" >Ads Purchased</h1>
+		
+		<table class="table container-fluid adsPurchased-table"
+			aria-label="Purchases Table">
+	        <thead>
+	          <tr>
+	            <th scope="col">Ad name</th>
+	            <th scope="col">Ad owner</th>
+	            <th scope="col">Price</th>
+	            <th scope="col">Purchase date</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+		        <tr th:if="${adsPurchased.empty}">
+		            <td colspan="4"> No ads purchased </td>
+		        </tr>
+	          <tr th:each="ad : ${adsPurchased}">
+	            <th scope="row"><a  th:href="@{'/ads/' + ${ad.id}}" th:text="${ad.adName}">adName</a></th>
+	            <th scope="row"><span th:text="${ad.userName}"/></th>
+	            <th scope="row"><span th:text="${ad.price}"/></th>
+	            <th scope="row"><span th:text="${ad.soldDate}"/></th>
+	          </tr>
+	        </tbody>
+	    </table>
+			
+        <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    </body>
+</html>

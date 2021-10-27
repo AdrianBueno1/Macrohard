@@ -1,0 +1,100 @@
+<div th:fragment="ad_buttons">
+	<div class="form-inline">
+	
+			<a id="ad_details_btn" th:if="${!isAdDetails}" th:href="@{'/ads/' + ${ad.id}}" role="button"
+				class="btn btn-primary btn-nav " th:text="#{ad.details.button}">See Details</a>	
+		
+		<div sec:authorize="isAuthenticated()" class="form-group">
+								<div th:if="${ad.userId != my_id}" >
+									<div th:unless="${ad.sold}">
+										<div th:if="${!favs.isEmpty()}">
+							
+											<div th:if="${!favs.contains(ad.id)}">
+												<form  method="post" th:action="@{'/Fav'(adId=${ad.id})}">
+													<button type="submit" class="btn btn-warning">Fav</button>
+												</form>
+											</div>
+											<!--% fav.adId==ad.id   -->
+											<div th:unless="${!favs.contains(ad.id)}">
+												<form method="post" th:action="@{'/Fav/remove'(adId=${ad.id})}">
+													<button type="submit" class="btn btn-danger">unFav</button>
+												</form>
+											</div>
+							
+										</div>
+										<div  th:unless="${!favs.isEmpty()}">
+											<form id="fav-form" method="post" th:action="@{'/Fav'(adId=${ad.id})}">
+												<button type="submit" class="btn btn-warning">Fav</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+			
+			
+		<div sec:authorize="isAuthenticated()" class="form-group">
+			<div th:if="${ad.userId != my_id}">
+				<div th:if="${!following.isEmpty()}">
+					<div th:if="${!following.contains(ad.userId)}">
+						<form method="post" th:action="@{'/user/follow/' + ${ad.userId}}">
+							<button type="submit" class="btn btn-warning btn-nav">Follow</button>
+						</form>
+					</div>
+					<div th:unless="${!following.contains(ad.userId)}">
+						<form method="post" th:action="@{'/user/unfollow/' + ${ad.userId}}">
+							<button type="submit" class="btn btn-danger btn-nav">Unfollow</button>
+						</form>
+					</div>
+				</div>
+				<div th:unless="${!following.isEmpty()}">
+					<form method="post" th:action="@{'/user/follow/' + ${ad.userId}}">
+						<button type="submit" class="btn btn-warning btn-nav">Follow</button>
+					</form>
+				</div>
+			</div>
+		</div>
+			
+		<div sec:authorize="isAuthenticated()" class="form-group">
+			<div th:if="${ad.userId == my_id}" >
+				<form method="post" th:action="@{'/hold' (adId=${ad.id})}">
+					<button id="hold_btn" th:if="${ad.hold}" type="submit" class="btn btn-warning">Release</button>
+					<button id="hold_btn" th:unless="${ad.hold}" type="submit" class="btn btn-primary">Hold</button>
+				</form>
+			</div>
+		</div>
+			
+		<div sec:authorize="isAuthenticated()" class="form-group">
+			<div th:if="${ad.userId == my_id}" >
+				<form method="post" th:action="@{'/userList/removeA'(adId=${ad.id})}">
+					<button id="remove_btn" type="submit" class="btn btn-danger btn-nav">Remove ad</button>
+				</form>
+			</div>
+		</div>
+		
+							<div sec:authorize="isAuthenticated()" class="form-group">
+								<div th:if="${ad.userId != my_id}">
+									<div th:if="${ad.sold}">
+										<p class="text-sold" >This product is sold.</p>	
+									</div>
+									<div th:unless="${ad.sold}">
+										<form method="post" th:action="@{'/user/buy/' + ${ad.id}}">
+											<button type="submit" class="btn btn-success btn-nav">Buy</button>
+										</form>	
+									</div>
+								</div>
+								<div th:unless="${ad.userId != my_id}">
+									<div th:if="${ad.sold}">
+										<p class="text-sold" >This product is sold.</p>	
+									</div>
+								</div>
+							</div>
+			
+		<div sec:authorize="isAuthenticated()" class="form-group btn-ad-right">
+			<div th:if="${ad.userId != my_id}" >
+				<form method="post" th:action="@{'/chats/createChat' (sellerId=${ad.userId})}">
+					<button id="chat_btn" type="submit" class="btn btn-primary">Chat</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments/header :: header" />
+
+    <body>
+        <header class="header" th:include="fragments/menu :: menu" />
+        
+        <h1 class="form-title" >Following</h1>
+        
+        <div class="main-welcome container-fluid">
+        	<a id="ad_following_btn" th:href="@{/user/following/list}" role="button"
+					class="btn btn-primary btn-nav">Filter Ads</a>
+		</div>
+		
+		<table class="table container-fluid following-table"
+			aria-label="Following List Table">
+	        <thead>
+	          <tr>
+	            <th scope="col">Name</th>
+	            <th scope="col">Email</th>
+	            <th scope="col">City</th>
+	            <th scope="col">Actions</th>
+	          </tr>
+	        </thead>
+	        <tbody>
+		        <tr th:if="${following.empty}">
+		            <td colspan="4"> No users found </td>
+		        </tr>
+	          <tr th:each="followed : ${following}">
+	            <th scope="row"><span th:text="${followed.userName}"/></th>
+	            <th scope="row"><span th:text="${followed.email}"/></th>
+	            <th scope="row"><span th:text="${followed.city}"/></th>
+	            <td>
+	              <form method="post" th:action="@{'/user/unfollow/' + ${followed.id}}">
+					<button type="submit" class="btn btn-warning">Unfollow Seller</button>
+				  </form>
+	            </td>
+	          </tr>
+	        </tbody>
+	    </table>
+			
+        <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:include="fragments/header :: header" />
+	
+	<body>
+		<header class="header" th:include="fragments/menu :: menu" />
+		
+			<div class="container">
+				<div class="row">
+			   		<div id="login_form_container" class="col-md-6 col-md-offset-3 panel panel-default">
+			    
+						<h1  class="form-title" th:text="#{login.form.title}">Login</h1>
+			
+			    		<form id="login_form" class="col-md-10" th:action="@{/login}" method="post">
+			
+							<div class="form-group">
+			                	<label for="username" class="control-label" th:text="#{login.form.username}">Username:</label> 
+			                	<input type="text" id="username" name="username" class="form-control" required/>
+			                </div>
+			
+							<div class="form-group">
+			                	<label for="password" class="control-label" th:text="#{login.form.password}">Password:</label> 
+			                	<input type="password" id="password" name="password" class="form-control" required/>
+			                </div>
+			
+							<span class="error-message" th:if="${error != null}" th:text="${error}">Login error</span>
+			
+							<div class="form-group submit_form_group">
+			                	<button type="submit" class="btn btn-success" th:text="#{login.form.submit}">Login</button>
+			                	<span th:text="#{login.info.new}">New user?</span> 
+								<a th:href="@{/signUp}" th:text="#{login.info.register}">Register here</a>
+			                </div>
+			
+						</form>
+			  		</div>
+			 	</div>
+			</div>
+			
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	</body>
+</html>

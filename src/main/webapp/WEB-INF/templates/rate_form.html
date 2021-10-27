@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<head th:include="fragments/header :: header" />
+	
+	<body>
+		<header class="header" th:include="fragments/menu :: menu" />
+		
+			<div class="container">
+				<div class="row">
+			   		<div id="login_form_container" class="col-md-6 col-md-offset-3 panel panel-default">
+			    
+						<h1 class="form-title">Rate User</h1>
+			
+						<div class="col-md-3 user-rating-form">
+							<div class="star-ratings star-ratings-form">
+							  <div class="fill-ratings" th:style="'width:' + ${percent_rate} + '%'">
+							    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+							  </div>
+							  <div class="empty-ratings">
+							    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+							  </div>
+							</div>
+						</div>
+						
+						<div class="col-md-12 rating-text">
+							<span th:text="${user.rate}">0.0</span> (<span th:text="${user.timesRated}">0</span>)
+						</div>
+						
+						<div th:if="${rated}" class="col-md-12 rated-text">
+							<span>You have already rated this user with </span><span th:text="${my_rating}">0.0</span><span> star(s).</span>
+						</div>
+						
+			    		<form id="rating_form" class="col-md-12" th:action="@{'/user/' + ${user.id} + '/rate'}" th:object="${rateDto}" method="post">		
+							<label for="value" class="control-label" >Your Rating:</label> 
+                            <input id="value" class="form-control" th:field="*{value}" type="number" value="1" min="1" max="5" required/>
+						
+							<div class="form-group submit_form_group">
+	                        	<button type="submit" class="btn btn-success" >Rate</button>
+	                        </div>
+						</form>
+			  		</div>
+			 	</div>
+			</div>
+			
+		<script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+		<script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+	</body>
+</html>

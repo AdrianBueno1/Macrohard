@@ -1,0 +1,35 @@
+/*!
+ * Spring MVC Project navigation bar styles
+ * Copyright 2017-2019 Bernardo Mart�ｿｽnez Garrido
+ * Licensed under the MIT License (http://www.opensource.org/licenses/mit-license.php)
+ *
+ * This file contains styles for the navigation bar.
+ */
+.navbar {
+	border: 1px solid #d7d7d7;
+	border-radius: 4px;
+}
+
+.btn-nav {
+	margin: 12.5px 6px;
+}
+
+#login_btn, #signup_btn, #ad_btn, #ad_list, #profile_btn, #logout_btn, #userAds_btn, 
+	#search_btn, #following_btn, #ad_following_btn, #chats_btn, #premium_btn, #purchased_btn, #adsPurchased_btn {
+
+	color: white;
+}
+
+
+ #premium_btn:hover
+{
+	background-color : #f0ad4ed6;
+}
+
+#login_btn:hover, #signup_btn:hover, #ad_btn:hover, #ad_list:hover, #userAds_btn:hover,
+ #profile_btn:hover, #logout_btn:hover, #search_btn:hover, #following_btn:hover, #ad_following_btn:hover
+ #chats_btn:hover, #purchased_btn:hover, #adsPurchased_btn:hover {
+	background-color: #1863e6;
+	border-color: #175fdd;
+}
+

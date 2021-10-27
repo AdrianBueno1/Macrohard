@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments/header :: header" />
+
+    <body>
+
+		<header class="header" th:include="fragments/menu :: menu" />
+	
+		<section th:id="'main-chat-' + ${my_id}" class="container-fluid main-chat">
+			<div class="row main-chat-content">
+				<div class="col-md-3 chat_seller_section">
+		        	<div class="sellers_header">
+		            	<h4>Sellers</h4>
+		            </div>
+		            
+		            <div id="chat_inbox" class="chat_inbox">
+		            
+		            </div>
+		            
+				</div>
+				
+				<div class="col-md-9 chat_container">
+					<div class="row seller_chat_header">
+						<div class="col seller_img_container"> 
+		            		<img class="seller_img" th:src="@{/resources/images/user_icon.png}" alt="sunil"> 
+		            	</div>
+		                <div id="active_username" class="col-md-7 seller_name_container">
+		               	 </div>
+					</div>
+					<div id="chat_content_container" class="row seller_chat_content">
+					</div>
+					<div class="chat_input_main_container">
+					
+						<div class="chat-input-container">
+						    <input id="chat-send-input" class="form-control">
+						 </div><div class="chat-input-send-container">
+						    <button  type="button" id="btn-chat-input-send" class="btn btn-primary btn-chat">Send</button>
+						 </div>
+						 
+					 </div>
+				</div>
+				
+			</div>
+		</section>
+	
+		 <div th:include="fragments/scripts :: general" />
+		 
+		 <script type="text/javascript" th:src="@{/static/js/chat.js}"></script>
+		 
+    </body>
+</html>

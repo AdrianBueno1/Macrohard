@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:include="fragments/header :: header" />
+
+<body>
+
+	<header class="header" th:include="fragments/menu :: menu" />
+
+	<section id="main-section-profile" class="container-fluid">
+		
+		<div class="row row align-self-center">
+				
+			<h2 class="form-title">Datos</h2>
+			
+			<div class="row">
+			
+				<div class="col-md-8 col-md-offset-2 form-profile">
+				
+					<div class="row">
+						<div class="col-md-6">
+							<span class="WzaSad">Username </span>
+						</div>
+						<div class="col-md-6">
+							<span th:text="${user.userName}"></span>
+						</div>
+					</div>
+					<hr class="hr-profile">
+				
+					<div class="row">
+						<div class="col-md-6">
+							<span class="WzaSad">First Name</span>
+						</div>
+						<div class="col-md-6">
+							<span  th:text="${user.firstName}"></span>
+						</div>
+					</div>
+					<hr class="hr-profile">
+					
+					<div class="row">
+						<div class="col-md-6">
+							<span class="WzaSad">Last Name</span>
+						</div>
+						<div class="col-md-6">
+							<span th:text="${user.lastName}"></span>
+						</div>
+					</div>
+					<hr class="hr-profile">
+					
+					<div class="row">
+						<div class="col-md-6">
+							<span class="WzaSad">City</span>
+						</div>
+						<div class="col-md-6">
+							<span  th:text="${user.city}"></span>
+						</div>
+					</div>
+					<hr class="hr-profile">
+
+					<div class="row">
+						<div class="col-md-6">
+							<span class="WzaSad">Email</span>
+						</div>
+						<div class="col-md-6">
+							<span th:text="${user.email}"></span>
+						</div>
+					</div>
+					<hr class="hr-profile">
+					
+				</div>
+				
+				<div class="col-md-3 user-rating">
+					<div class="star-ratings star-ratings-profile">
+					  <div class="fill-ratings" th:style="'width:' + ${percent_rate} + '%'">
+					    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+					  </div>
+					  <div class="empty-ratings">
+					    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+					  </div>
+					</div>
+				</div>
+				
+				<div class="col-md-12 rating-text">
+					<span th:text="${user.rate}">0.0</span> (<span th:text="${user.timesRated}">0</span>)
+				</div>
+				
+				<div th:if="${rated}" class="col-md-12 rated-text">
+					<span>You have already rated this user with </span><span th:text="${my_rating}">0.0</span><span> star(s).</span>
+				</div>
+				
+				<div class="col-md-8 col-md-offset-2">
+					<hr class="hr-profile">
+				</div>
+				
+				<div sec:authorize="isAuthenticated()">
+					<div th:if="${user.id != my_id}" >
+						<div class="col-md-12 btn-profile-rate-col">
+							<a id="rate_btn" th:href="@{'/user/' + ${user.id} + '/rate'}" role="button" class="btn btn-warning btn-nav">Rate</a>
+						</div>
+					</div>
+				</div>
+								
+				<div sec:authorize="isAuthenticated()">
+					<div th:if="${user.id == my_id}" >
+						<div class="col-md-12 btn-profile-col">
+							<a id="userAds_btn" th:href="@{/Fav/list}" role="button" class="btn btn-primary btn-nav "
+								th:text="#{label.favList}">Favs</a>
+							<a id="following_btn" th:href="@{/user/following}" role="button" class="btn btn-primary btn-nav">Following</a>
+							<a id="purchased_btn" th:href="@{/user/adsPurchased}" role="button" class="btn btn-primary btn-nav">Ads Purchased</a>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	
+</body>
+
+<footer>
+	<div th:include="fragments/scripts :: general" />
+</footer>
+
+</html>
+

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bean:beans xmlns:bean="http://www.springframework.org/schema/beans"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/security"
+ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+ 
+
+	<http auto-config="true">
+		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/signUp" access="isAnonymous()" />
+		<intercept-url pattern="/login" access="isAnonymous()" />
+		<intercept-url pattern="/createAd" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/user/**" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/logout" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/userList" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/Fav/**" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/chats/**" access="isFullyAuthenticated()" />
+		<intercept-url pattern="/api/chat/**" access="isFullyAuthenticated()" />
+		<!-- enable csrf protection -->
+		<csrf />
+	 
+	 	<access-denied-handler error-page="/403" />
+	 	
+	 	<headers>
+           <frame-options policy="SAMEORIGIN" />
+       </headers>
+	 
+		<form-login login-page="/login"
+			default-target-url='/'
+			authentication-failure-handler-ref="customFailureHandler"  />
+	    <logout logout-success-url="/login" invalidate-session="true" logout-url="/logout"/>
+	</http>
+	 
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="customAuthenticationProvider" />
+	</authentication-manager>
+	 
+	<bean:bean id="customAuthenticationProvider" class="es.udc.fi.dc.fd.service.CustomAuthenticationProvider" />
+	 
+	<bean:bean id="customFailureHandler"
+		class="org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler">
+	    <bean:property name="exceptionMappings">
+	        <bean:props>
+	            <bean:prop key="org.springframework.security.authentication.BadCredentialsException">/login/error</bean:prop>
+	        </bean:props>
+	    </bean:property>
+	    <bean:property name="defaultFailureUrl" value="/login/error" />
+	</bean:bean>
+	
+</bean:beans>

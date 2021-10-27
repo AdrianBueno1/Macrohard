@@ -1,0 +1,26 @@
+<div th:fragment="ad_fragment">
+
+	<div class="col-md-6 col-md-offset-3 panel panel-default">
+		<h3 class="form-title" th:text="${ad.adName}">Ad Title</h3>
+		
+		<div th:switch="${ad.hold}"> 
+			<div th:case="false"></div>
+			<div th:case="true"><em style="font-size:24px" class="circle">&#10074; &#10074;</em>
+			</div>
+			
+		<div th:switch="${ad.premium}"> 
+				<div th:case="true" class="text-right">
+					<div class="badge-premium">Premium</div>
+				</div>
+				<div th:case="*">				  		
+				</div>
+		</div>
+		</div>
+	
+			<div th:replace="fragments/ad_details :: ad_details(ad=${ad}, my_id=${my_id}, favs=${favs}, following=${following})" />
+		
+			<div th:replace="fragments/adButtons :: ad_buttons(ad=${ad}, my_id=${my_id}, favs=${favs}, following=${following}, isAdDetails=${false})" />
+			
+	</div>
+	
+</div>

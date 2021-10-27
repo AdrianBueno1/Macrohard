@@ -1,0 +1,57 @@
+<div th:fragment="ad_details">
+
+	<div class="panel-body">
+		<div class="col-md-4">
+			<div class="img_ad_container">
+				<img alt="Ad Pic" th:src="@{'/ads/' + ${ad.id} + '/images/' + 1}"
+					class="img-thumbnail img-thumbnail-img-ad">
+			</div>
+			
+			<div class="details-box">	
+
+				
+				<span class="title-label">Price:</span>
+				<span th:text="${ad.price}">Price</span>
+				<span>&euro;</span>
+				<br/>
+				
+				<span class="title-label">City:</span>
+				<span th:text="${ad.city}">City</span>
+				<br/>
+				
+				<span class="title-label">Date:</span>
+				<span th:text="${ad.date}">Date</span>
+				<br/>
+				
+				<span class="title-label">Seller:</span>
+				<span sec:authorize="isAnonymous()" th:text="${ad.userName}">Username</span>
+				<a sec:authorize="isAuthenticated()" th:href="@{'/user/' + ${ad.userId}}" th:text="${ad.userName}">Username</a>
+				<br/>
+				
+				<span class="col-md-6 title-label label-rate">User rating: </span>
+				<div class="col-md-5 star-ratings">
+				  <div class="fill-ratings" th:style="'width:' + ${ad.rate} + '%'">
+				    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+				  </div>
+				  <div class="empty-ratings">
+				    <span>&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+				  </div>
+				</div>
+				
+				
+			</div>
+		</div>
+		
+		
+		<div class="col-md-8 ad-text-container">
+			<div class="form-group">
+				<label id="label_desc" class="control-label"
+					th:text="#{creation.form.description}">Description</label>
+				<div class="overflow-auto description_text_list">
+					<span th:text="${ad.description}" />
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

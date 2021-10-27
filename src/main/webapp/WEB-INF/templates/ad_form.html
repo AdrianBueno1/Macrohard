@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+    <head th:include="fragments/header :: header" />
+
+    <body>
+        <header class="header" th:include="fragments/menu :: menu" />
+
+        <div class="container">
+            <div class="row">
+                <div id="ad_Creation_form_container" class="col-md-6 col-md-offset-3 panel panel-default">
+
+                    <div th:if="${param.success}">
+                        <div class="alert alert-info">Ad successfully registered
+                            to our awesome app!</div>
+                    </div>
+
+                    <h1 class="form-title" th:text="#{creation.form.title}">Ad Creation</h1>
+                    <form id="ad_form" class="col-md-10" th:action="@{/createAd}" th:object="${ad}" method="post" enctype="multipart/form-data">
+
+                        <div class="form-group" th:classappend="${#fields.hasErrors('adName')}? 'has-error':''">
+                            <label for="adName" class="control-label" th:text="#{creation.form.adName}">Ad Name</label> 
+                            <input id="adName" class="form-control" th:field="*{adName}" required/>
+
+                            <p class="error-message" th:each="error: ${#fields.errors('adName')}"
+                            	th:text="${error}">Validation error</p>
+                        </div>
+                        
+                        <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error':''">
+                            <label for="city" class="control-label" th:text="#{search.form.city}">City</label> 
+                            <input id="city" class="form-control" th:field="*{city}"/>
+                            
+                            <p class="error-message" th:each="error: ${#fields.errors('description')}"
+                            	th:text="${error}">Validation error</p>
+                        </div>
+                        
+                        <div class="form-group" th:classappend="${#fields.hasErrors('price')}? 'has-error':''">
+                            <label for="price" class="control-label" th:text="#{search.form.price}">Price</label> 
+                            <input id="price" type="number" class="form-control col-md-6" th:field="*{price}" value="0.01" min="0.01" max="99999.99" step=".01" required />
+                        	<span>(&euro;)</span>
+                        	
+                        	<p class="error-message" th:each="error : ${#fields.errors('price')}" 
+                            	th:text="${error}">Validation error</p>
+                        </div>
+
+                        <div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-error':''">
+                            <label for="description" class="control-label" th:text="#{creation.form.description}">Description</label> 
+                            <textarea id="description" class="form-control description_textarea" th:field="*{description}" rows="10" required/>
+
+                            <p class="error-message" th:each="error: ${#fields.errors('description')}"
+                            	th:text="${error}">Validation error</p>
+                        </div>
+
+                       <div class="form-group" >
+                            <label for="image" class="control-label" th:text="#{creation.form.urlImg}">Images</label> 
+                            <input id="image" class="form-control" name="images" type ="file" accept="image/*"  multiple="multiple" required />
+
+                        </div>
+                        
+                        <div class="form-group submit_form_group">
+                        	<button type="submit" class="btn btn-success" th:text="#{creation.form.submit}">Create</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" th:src="@{/webjars/jquery/3.2.1/jquery.min.js/}"></script>
+        <script type="text/javascript" th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+    </body>
+</html>
